@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>add waiter hours</title>
+  </head>
+  <body>
+    <script type="module" src="FileSaver.js"></script>
+    <input type="text" placeholder="שם" id="waiterName" />
+    <input type="text" placeholder="שעות" id="waiterHours" />
+    <input type="text" placeholder="דקות" id="waiterMinutes" />
+    <input type="checkbox" id="is70" />
+    <label for="is70">70%</label>
+    <input type="button" value="הוספה" id="addWaiter" onclick="addWaiter" />
+    <input type="button" value="סיום" id="waiterFinish" onclick="doneAdding" />
+    <script src="addWaiterPage.js"></script>
+  </body>
+</html>
