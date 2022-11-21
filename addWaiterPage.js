@@ -4,6 +4,8 @@ const hoursIn = document.querySelector("#waiterHours");
 const minutesIn = document.querySelector("#waiterMinutes");
 const addWaiterBtn = document.querySelector("#addWaiter");
 const is70Check = document.querySelector("#is70");
+const waiterList = document.querySelector("#waiter-list");
+const download = document.querySelector("#download-link");
 
 let is70 = is70Check.checked;
 let currentWaiter;
@@ -73,8 +75,16 @@ function addWaiter() {
   minutesIn.value = "";
   is70Check.checked = false;
   waiters.push(currentWaiter);
+  addWaterToList(
+    currentWaiter.getName(),
+    currentWaiter.getTotalHours().toFixed(2)
+  );
 }
-
+function addWaterToList(name, hours) {
+  var tempLi = document.createElement("li");
+  tempLi.appendChild(document.createTextNode(`${name}: ${hours}`));
+  waiterList.appendChild(tempLi);
+}
 addWaiterBtn.addEventListener("click", addWaiter);
 
 function doneAdding() {
@@ -82,15 +92,15 @@ function doneAdding() {
 
   cashPerHour70 = (cashHere / totalHours) * 0.7;
   creditPerHour70 = (credHere / totalHours) * 0.7;
-  console.log(cashPerHour70 + "  " + creditPerHour70);
+  // console.log(cashPerHour70 + "  " + creditPerHour70);
 
   for (var i = 0; i < waiters.length; i++) {
     if (waiters[i].getIs70()) {
       currentWaiterName = waiters[i].getName();
       currentWaiterCash = cashPerHour70 * waiters[i].getTotalHours();
-      currentWaiterCash -= currentWaiterCash % 0.01;
+      currentWaiterCash.toFixed(2);
       currentWaiterCred = creditPerHour70 * waiters[i].getTotalHours();
-      currentWaiterCred -= currentWaiterCred % 0.01;
+      currentWaiterCred.toFixed(2);
       currentWaiterIs70 = "כן";
 
       cash70 += currentWaiterCash;
@@ -115,9 +125,9 @@ function doneAdding() {
     if (!waiters[i].getIs70()) {
       currentWaiterName = waiters[i].getName();
       currentWaiterCash = cashPerHour * waiters[i].getTotalHours();
-      currentWaiterCash -= currentWaiterCash % 0.01;
+      currentWaiterCash.toFixed(2);
       currentWaiterCred = creditPerHour * waiters[i].getTotalHours();
-      currentWaiterCred -= currentWaiterCred % 0.01;
+      currentWaiterCred.toFixed(2);
       currentWaiterIs70 = "לא";
 
       waiterDetails[i] = [
@@ -130,24 +140,32 @@ function doneAdding() {
     }
   }
 
-  var blob = new Blob(
+  let file = new File(
     [
       `מזומן: ${cashHere} \n\n אשראי: ${credHere} \n\n סה"כ: ${
-        credHere + cashHere
-      } \n\n טיפים בר: ${localStorage["bar"]} \n\n מזומן בשעה: ${
-        cashPerHour - (cashPerHour % 0.01)
-      } \n\n אשראי בשעה: ${
-        creditPerHour - (creditPerHour % 0.01)
-      } \n\n מזומן בשעה 70%: ${
-        cashPerHour70 - (cashPerHour70 % 0.01)
-      } \n\n אשראי בשעה 70%: ${
-        creditPerHour70 - (creditPerHour70 % 0.01)
-      } \n\n ${waiterDetails}`,
+        parseInt(credHere) + parseInt(cashHere)
+      } \n\n טיפים בר: ${
+        localStorage["bar"]
+      } \n\n מזומן בשעה: ${cashPerHour.toFixed(
+        2
+      )} \n\n אשראי בשעה: ${creditPerHour.toFixed(
+        2
+      )} \n\n מזומן בשעה 70%: ${cashPerHour70.toFixed(
+        2
+      )} \n\n אשראי בשעה 70%: ${creditPerHour70.toFixed(
+        2
+      )} \n\n ${waiterDetails}`,
     ],
     {
-      type: "text/plain;charset=utf-8",
+      type: "application/json",
     }
   );
-  saveAs(blob, `${dateHere}.txt`);
+
+  const fileURL = URL.createObjectURL(file);
+  download.setAttribute("href", fileURL);
+  download.setAttribute("download", `${dateHere}.json`);
+
+  download.click();
+  waiterList.children = "";
 }
 waiterFinish.addEventListener("click", doneAdding);

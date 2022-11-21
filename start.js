@@ -17,15 +17,16 @@ function confStart() {
   if (barDrop.checked) {
     cashAfterBar = cash * 0.95;
     credAfterBar = credit * 0.95;
+    localStorage["bar"] = cash * 0.05 + credit * 0.05;
   } else {
     cashAfterBar = cash;
     credAfterBar = credit;
+    localStorage["bar"] = 0;
   }
   location.href = "addPage.html";
   localStorage["cash"] = cashAfterBar;
   localStorage["cred"] = credAfterBar;
   localStorage["date"] = date;
-  localStorage["bar"] = cash * 0.05 + credit * 0.05;
 
   // alert(`${date} , ${cash} , ${credit}`);
 }

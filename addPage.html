@@ -5,16 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>add waiter hours</title>
+    <link rel="stylesheet" href="addPageStyle.css" />
   </head>
   <body>
-    <script type="module" src="FileSaver.js"></script>
-    <input type="text" placeholder="שם" id="waiterName" />
-    <input type="text" placeholder="שעות" id="waiterHours" />
-    <input type="text" placeholder="דקות" id="waiterMinutes" />
-    <input type="checkbox" id="is70" />
-    <label for="is70">70%</label>
-    <input type="button" value="הוספה" id="addWaiter" onclick="addWaiter" />
-    <input type="button" value="סיום" id="waiterFinish" onclick="doneAdding" />
+    <!-- <script type="module" src="FileSaver.js"></script> -->
+    <div class="input-container">
+      <input type="text" placeholder="שם" id="waiterName" />
+      <input type="text" placeholder="שעות" id="waiterHours" />
+      <input type="text" placeholder="דקות" id="waiterMinutes" />
+      <div class="check-container">
+        <input type="checkbox" id="is70" />
+        <label for="is70">70%</label>
+      </div>
+      <input type="button" value="הוספה" id="addWaiter" onclick="addWaiter" />
+      <input
+        type="button"
+        value="סיום"
+        id="waiterFinish"
+        onclick="doneAdding"
+      />
+    </div>
+    <a id="download-link"></a>
+    <ul class="added-list" id="waiter-list"></ul>
     <script src="addWaiterPage.js"></script>
   </body>
 </html>
